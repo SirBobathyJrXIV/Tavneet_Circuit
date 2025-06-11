@@ -43,6 +43,9 @@ void loop() {
 
   Serial.print("Moisture: ");
   Serial.println(moisture);
+  
+  Serial.print("Light Level: ");
+  Serial.println(lightLevel);
 
   // Manage LEDs based on moisture level
   LEDManager(percent);
