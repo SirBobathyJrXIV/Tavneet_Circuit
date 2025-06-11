@@ -10,6 +10,8 @@ const int redLED = 2;
 const int yellowLED = 3;
 const int greenLED = 4;
 const int buzzer = 5;
+const int lightSensorPin = A1;
+const int lightLED = 6;
 
 void setup() {
   pinMode(sensorPin, INPUT);
@@ -17,6 +19,7 @@ void setup() {
   pinMode(yellowLED, OUTPUT);
   pinMode(greenLED, OUTPUT);
   pinMode(buzzer, OUTPUT);
+  pinMode(lightLED, OUTPUT);
 
   // Initialize I2C LCD
   Wire.begin();
@@ -29,6 +32,7 @@ void setup() {
 
 void loop() {
   int moisture = analogRead(sensorPin);
+  int lightLevel = analogRead(lightSensorPin);
   int percent = map(moisture, 1023, 270, 0, 100); // Dry = 1023, Wet = 0
 
   // Update LCD
@@ -42,7 +46,9 @@ void loop() {
 
   // Manage LEDs based on moisture level
   LEDManager(percent);
-
+  // Manage Light LED based on light level
+  lightManager(lightLevel);
+  
   delay(1000);
 }
 
@@ -79,4 +85,12 @@ void pulseBuzzer() {
   delay(1000);          // Keep on for 1 second
   noTone(buzzer);       // Turn off buzzer
   delay(1000);          // Stay off for 1 second
+}
+
+void lightManager(int lightLevel) {
+  if (lightLevel < 200) {
+    digitalWrite(lightLED, HIGH);
+  } else {
+    digitalWrite(lightLED, LOW);
+  }
 }
