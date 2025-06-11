@@ -52,7 +52,7 @@ void LEDManager(int moisturePercent) {
     digitalWrite(redLED, HIGH);
     digitalWrite(yellowLED, LOW);
     digitalWrite(greenLED, LOW);
-    tone(buzzer, 200);  // 200 Hz tone
+    pulseBuzzer();  // Call new buzzer method
     lcd.setCursor(0, 0);
     lcd.print("Status: DRY     ");
   } else if (moisturePercent < 70) {
@@ -72,4 +72,11 @@ void LEDManager(int moisturePercent) {
     lcd.setCursor(0, 0);
     lcd.print("Status: WET     ");
   }
+}
+
+void pulseBuzzer() {
+  tone(buzzer, 200);    // Turn on buzzer at 200 Hz
+  delay(1000);          // Keep on for 1 second
+  noTone(buzzer);       // Turn off buzzer
+  delay(1000);          // Stay off for 1 second
 }
